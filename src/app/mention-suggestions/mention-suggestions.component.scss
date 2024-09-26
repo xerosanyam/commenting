@@ -1,0 +1,46 @@
+.dropdown {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(100% + 2px);
+  background-color: white;
+  border: 1px solid #ddd;
+  width: 100%;
+  max-height: 180px;
+  overflow-y: auto;
+  z-index: 1;
+  padding: 8px;
+}
+
+.dropdown ul {
+  list-style: none;
+  padding: 8px;
+  margin: 0;
+}
+
+.dropdown li {
+  padding: 0;
+  cursor: pointer;
+}
+
+.dropdown li button {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.dropdown li.selected button,
+.dropdown li button:hover {
+  background-color: #f0f0f0;
+}
+
+.dropdown .suggestion-title {
+  padding: 4px;
+  font-weight: bold;
+  font-size: 16px;
+  color: grey;
+}

@@ -1,4 +1,5 @@
 <div class="comments-section">
+  <h3>Comments</h3>
   <ul>
     @for (comment of comments; track comment) {
       <li>
@@ -6,24 +7,33 @@
       </li>
     }
   </ul>
-
-  <form>
-    <textarea
-      class="comment-textarea"
-      name="comment"
-      [ngModel]="newComment"
-      (ngModelChange)="newComment = $event"
-      (input)="onCommentInput($event)"
-      placeholder="Add new comment..."
-      [ngModelOptions]="{ standalone: true }"
-    ></textarea>
-    <button
-      type="submit"
-      class="comment-button"
-      [disabled]="!newComment"
-      (click)="onCommentSubmit()"
+  <section class="comment-input">
+    <app-mention-suggestions
+      #mentionSuggestions
+      title="Users"
+      [suggestions]="users"
+      (suggestionSelected)="handleSuggestionSelected($event)"
     >
-      Add comment
-    </button>
-  </form>
+    </app-mention-suggestions>
+    <form>
+      <textarea
+        #commentTextarea
+        class="comment-textarea"
+        name="comment"
+        [ngModel]="newComment"
+        (ngModelChange)="newComment = $event"
+        (input)="onCommentInput($event)"
+        placeholder="Add new comment..."
+        [ngModelOptions]="{ standalone: true }"
+      ></textarea>
+      <button
+        type="submit"
+        class="comment-button"
+        [disabled]="!newComment"
+        (click)="onCommentSubmit()"
+      >
+        Add comment
+      </button>
+    </form>
+  </section>
 </div>
