@@ -35,8 +35,27 @@ export class CommentListComponent {
   onCommentSubmit(): void {
     if (this.newComment.trim()) {
       this.comments.push(this.newComment.trim());
+      const mentionedUsers = this.extractMentionedUsers(this.newComment);
+      this.notifyMentionedUsers(mentionedUsers);
       this.newComment = '';
     }
+  }
+
+  extractMentionedUsers(comment: string): User[] {
+    const mentionRegex = /@(\w+)/g;
+    const mentions = comment.match(mentionRegex) || [];
+    return mentions
+      .map(mention => mention.substring(1)) // Remove '@' symbol
+      .map(name => this.users.find(user => user.name.toLowerCase() === name.toLowerCase()))
+      .filter((user): user is User => user !== undefined);
+  }
+
+  notifyMentionedUsers(users: User[]): void {
+    users.forEach(user => {
+      console.log(`Notifying user: ${user.name} (ID: ${user.userID})`);
+      // Here you would implement the actual notification logic,
+      // such as sending an API request or triggering a notification service
+    });
   }
 
   users: User[] = [
