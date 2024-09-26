@@ -26,6 +26,10 @@ export class CommentListComponent {
 
   newComment = '';
 
+  get isCommentValid(): boolean {
+    return this.newComment.trim().length > 0;
+  }
+
   onCommentInput(event: Event): void {
     const target = event.target as HTMLTextAreaElement;
     this.newComment = target.value;
@@ -33,7 +37,7 @@ export class CommentListComponent {
   }
 
   onCommentSubmit(): void {
-    if (this.newComment.trim()) {
+    if (this.isCommentValid) {
       this.comments.push(this.newComment.trim());
       const mentionedUsers = this.extractMentionedUsers(this.newComment);
       this.notifyMentionedUsers(mentionedUsers);

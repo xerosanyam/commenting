@@ -29,7 +29,7 @@
       <button
         type="submit"
         class="comment-button"
-        [disabled]="!newComment"
+        [disabled]="!isCommentValid"
         (click)="onCommentSubmit()"
       >
         Add comment
