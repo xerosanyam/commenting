@@ -13,23 +13,16 @@
       (suggestionSelected)="handleSuggestionSelected($event)"
     >
     </app-mention-suggestions>
-    <form>
+    <form (ngSubmit)="onCommentSubmit()">
       <textarea
         #commentTextarea
         class="comment-textarea"
         name="comment"
-        [ngModel]="newComment"
-        (ngModelChange)="newComment = $event"
-        (input)="onCommentInput($event)"
+        [(ngModel)]="newComment"
+        (input)="onCommentInput()"
         placeholder="Add new comment..."
-        [ngModelOptions]="{ standalone: true }"
       ></textarea>
-      <button
-        type="submit"
-        class="comment-button"
-        [disabled]="!isCommentValid"
-        (click)="onCommentSubmit()"
-      >
+      <button type="submit" class="comment-button" [disabled]="!isCommentValid">
         Add comment
       </button>
     </form>

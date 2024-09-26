@@ -30,35 +30,32 @@ export class CommentListComponent {
     return this.newComment.trim().length > 0;
   }
 
-  onCommentInput(event: Event): void {
-    const target = event.target as HTMLTextAreaElement;
-    this.newComment = target.value;
+  onCommentInput(): void {
     this.mentionSuggestions.checkForMention(this.newComment);
   }
 
   onCommentSubmit(): void {
     if (this.isCommentValid) {
       this.comments.push(this.newComment.trim());
-      const mentionedUsers = this.extractMentionedUsers(this.newComment);
-      this.notifyMentionedUsers(mentionedUsers);
+      this.notifyMentionedUsers(this.newComment);
       this.newComment = '';
     }
   }
 
-  extractMentionedUsers(comment: string): User[] {
+  private extractMentionedUsers(comment: string): User[] {
     const mentionRegex = /@(\w+)/g;
     const mentions = comment.match(mentionRegex) || [];
     return mentions
-      .map(mention => mention.substring(1)) // Remove '@' symbol
+      .map(mention => mention.substring(1))
       .map(name => this.users.find(user => user.name.toLowerCase() === name.toLowerCase()))
       .filter((user): user is User => user !== undefined);
   }
 
-  notifyMentionedUsers(users: User[]): void {
-    users.forEach(user => {
+  notifyMentionedUsers(comment: string): void {
+    const mentionedUsers = this.extractMentionedUsers(comment);
+    mentionedUsers.forEach(user => {
       console.log(`Notifying user: ${user.name} (ID: ${user.userID})`);
-      // Here you would implement the actual notification logic,
-      // such as sending an API request or triggering a notification service
+      // Implement actual notification logic here
     });
   }
 
