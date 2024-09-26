@@ -1,0 +1,29 @@
+<div class="comments-section">
+  <ul>
+    @for (comment of comments; track comment) {
+      <li>
+        {{ comment }}
+      </li>
+    }
+  </ul>
+
+  <form>
+    <textarea
+      class="comment-textarea"
+      name="comment"
+      [ngModel]="newComment"
+      (ngModelChange)="newComment = $event"
+      (input)="onCommentInput($event)"
+      placeholder="Add new comment..."
+      [ngModelOptions]="{ standalone: true }"
+    ></textarea>
+    <button
+      type="submit"
+      class="comment-button"
+      [disabled]="!newComment"
+      (click)="onCommentSubmit()"
+    >
+      Add comment
+    </button>
+  </form>
+</div>
