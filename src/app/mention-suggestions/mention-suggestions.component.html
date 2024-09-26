@@ -4,8 +4,6 @@
       {{ title }}
       @if (mention) {
         matching &#64;{{ mention }}
-      } @else if (numberOfSuggestions < suggestions.length) {
-        ({{ numberOfSuggestions }}/{{ suggestions.length }})
       }
     </div>
     <ul>
