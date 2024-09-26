@@ -49,7 +49,6 @@ export class CommentListComponent {
     { userID: 7, name: 'Jen' },
     { userID: 8, name: 'Megan' },
     { userID: 9, name: 'Katie' },
-    { userID: 10, name: 'Sara' },
   ];
 
   handleSuggestionSelected(user: User): void {
