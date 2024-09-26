@@ -1,5 +1,11 @@
 @if (showDropdown) {
   <div class="dropdown">
+    <div class="suggestion-title">
+      {{ title }}
+      @if (mention) {
+        matching &#64;{{ mention }}
+      }
+    </div>
     <ul>
       @for (
         suggestion of filteredSuggestions;
