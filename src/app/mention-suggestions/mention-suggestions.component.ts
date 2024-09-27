@@ -7,9 +7,9 @@ interface User {
 
 @Component({
   selector: 'app-mention-suggestions',
-  templateUrl: './mention-suggestions.component.html',
-  styleUrl: './mention-suggestions.component.scss',
   standalone: true,
+  templateUrl: './mention-suggestions.component.html',
+  styleUrls: ['./mention-suggestions.component.scss']
 })
 export class MentionSuggestionsComponent {
   @Input() title = 'Suggestions';
@@ -19,8 +19,8 @@ export class MentionSuggestionsComponent {
   filteredSuggestions: User[] = [];
   showDropdown = false;
   mentionRegex = /@([a-zA-Z]*)$/;
-  selectedIndex = 1;
-  mention = ''
+  selectedIndex = -1;
+  mention = '';
   numberOfSuggestions = 4;
 
   @HostListener('document:keydown', ['$event'])

@@ -1,12 +1,12 @@
 @if (showDropdown) {
-  <div class="dropdown">
+  <div class="mention-suggestions">
     <div class="suggestion-title">
       {{ title }}
       @if (mention) {
-        matching &#64;{{ mention }}
+        <span>matching &#64;{{ mention }}</span>
       }
     </div>
-    <ul>
+    <ul class="suggestion-list">
       @for (
         suggestion of filteredSuggestions;
         track suggestion;
@@ -15,10 +15,12 @@
         <li [class.selected]="i === selectedIndex">
           <button
             type="button"
+            class="suggestion-button"
             (click)="selectSuggestion(suggestion)"
             (mouseenter)="selectedIndex = i"
           >
-            {{ suggestion.name }}
+            <span class="user-avatar">{{ suggestion.name[0] }}</span>
+            <span class="user-name">{{ suggestion.name }}</span>
           </button>
         </li>
       }
