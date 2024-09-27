@@ -21,19 +21,45 @@
     outline: none;
     border-color: #010101;
   }
+
+  &.ng-invalid.ng-touched {
+    border-color: #dc3545;
+  }
 }
 
-.comment-button {
+.button-group {
+  display: flex;
+  justify-content: flex-end;
   margin-top: 10px;
+}
+
+.comment-button,
+.reset-button {
   padding: 8px 16px;
-  background-color: #010101;
-  color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  margin-left: 10px;
+}
+
+.comment-button {
+  background-color: #010101;
+  color: white;
 
   &:disabled {
     background-color: #ccc;
+    cursor: not-allowed;
+  }
+}
+
+.reset-button {
+  background-color: #f8f9fa;
+  color: #010101;
+  border: 1px solid #010101;
+
+  &:disabled {
+    border-color: #ccc;
+    color: #ccc;
     cursor: not-allowed;
   }
 }

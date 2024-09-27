@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { MentionSuggestionsComponent } from '../mention-suggestions/mention-suggestions.component';
 import { CommentListViewComponent } from '../comment-list-view/comment-list-view.component';
 
@@ -19,6 +19,7 @@ interface User {
 export class CommentListComponent {
   @ViewChild('mentionSuggestions') mentionSuggestions!: MentionSuggestionsComponent;
   @ViewChild('commentTextarea') commentTextarea!: ElementRef<HTMLTextAreaElement>;
+  @ViewChild('commentForm') commentForm!: NgForm;
 
   comments: string[] = [
     'This task was assigned to Daryl',
@@ -27,20 +28,33 @@ export class CommentListComponent {
 
   newComment = '';
 
-  get isCommentValid(): boolean {
-    return this.newComment.trim().length > 0;
-  }
+  users: User[] = [
+    { userID: 1, name: 'Kevin' },
+    { userID: 2, name: 'Jeff' },
+    { userID: 3, name: 'Bryan' },
+    { userID: 4, name: 'Gabbey' },
+    { userID: 5, name: 'Daryl' },
+    { userID: 6, name: 'Kyle' },
+    { userID: 7, name: 'Jen' },
+    { userID: 8, name: 'Megan' },
+    { userID: 9, name: 'Kevin' }
+  ];
 
   onCommentInput(): void {
     this.mentionSuggestions.checkForMention(this.newComment);
   }
 
   onCommentSubmit(): void {
-    if (this.isCommentValid) {
+    if (this.commentForm.form.valid) {
       this.comments.push(this.newComment.trim());
       this.notifyMentionedUsers(this.newComment);
-      this.newComment = '';
+      this.resetForm();
     }
+  }
+
+  resetForm(): void {
+    this.newComment = '';
+    this.commentForm.resetForm();
   }
 
   private extractMentionedUsers(comment: string): User[] {
@@ -59,18 +73,6 @@ export class CommentListComponent {
       // Implement actual notification logic here
     });
   }
-
-  users: User[] = [
-    { userID: 1, name: 'Kevin' },
-    { userID: 2, name: 'Jeff' },
-    { userID: 3, name: 'Bryan' },
-    { userID: 4, name: 'Gabbey' },
-    { userID: 5, name: 'Daryl' },
-    { userID: 6, name: 'Kyle' },
-    { userID: 7, name: 'Jen' },
-    { userID: 8, name: 'Megan' },
-    { userID: 9, name: 'Kevin' }
-  ];
 
   handleSuggestionSelected(user: User): void {
     this.newComment = this.newComment.replace(/@([a-zA-Z]*)$/, `@${user.name} `);
