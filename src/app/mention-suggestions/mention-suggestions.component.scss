@@ -72,3 +72,30 @@
     }
   }
 }
+
+@media (max-width: 600px) {
+  .mention-suggestions {
+    max-height: 150px;
+
+    .suggestion-title {
+      font-size: 12px;
+      padding: 6px 10px;
+    }
+
+    .suggestion-list {
+      .suggestion-button {
+        padding: 6px 10px;
+
+        .user-avatar {
+          width: 20px;
+          height: 20px;
+          font-size: 10px;
+        }
+
+        .user-name {
+          font-size: 12px;
+        }
+      }
+    }
+  }
+}
