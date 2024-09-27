@@ -28,7 +28,14 @@
         commentForm.get("newComment")?.invalid &&
         commentForm.get("newComment")?.touched
       ) {
-        <div class="error-message">Please enter a valid comment.</div>
+        <div class="error-message">
+          @if (
+            commentForm.get("newComment")?.errors?.["required"] ||
+            commentForm.get("newComment")?.errors?.["whitespace"]
+          ) {
+            Please enter a valid comment.
+          }
+        </div>
       }
 
       <div class="button-group">
@@ -43,7 +50,10 @@
         <button
           type="submit"
           class="comment-button"
-          [disabled]="!commentForm.valid"
+          [disabled]="
+            !commentForm.valid ||
+            commentForm.get('newComment')?.hasError('whitespace')
+          "
         >
           {{ constants.ADD_COMMENT_BUTTON_TEXT }}
         </button>

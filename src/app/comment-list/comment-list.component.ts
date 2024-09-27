@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, AbstractControl } from '@angular/forms';
 import { MentionSuggestionsComponent } from '../mention-suggestions/mention-suggestions.component';
 import { CommentListViewComponent } from '../comment-list-view/comment-list-view.component';
 import { COMMENT_LIST_CONSTANTS, USER_LIST } from './comment-list.constants';
@@ -29,7 +29,7 @@ export class CommentListComponent implements OnInit {
 
   ngOnInit() {
     this.commentForm = this.fb.group({
-      newComment: ['', [Validators.required, Validators.minLength(1)]]
+      newComment: ['', [Validators.required, Validators.minLength(1), this.notOnlyWhitespace]]
     });
   }
 
@@ -78,5 +78,11 @@ export class CommentListComponent implements OnInit {
 
   closeSuggestions(): void {
     this.mentionSuggestions.showDropdown = false;
+  }
+
+  // Custom validator to check if the input is not only whitespace
+  private notOnlyWhitespace(control: AbstractControl): Record<string, any> | null {
+    const isWhitespace = (control.value || '').trim().length === 0;
+    return isWhitespace ? { 'whitespace': true } : null;
   }
 }
