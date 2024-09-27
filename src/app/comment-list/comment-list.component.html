@@ -10,7 +10,7 @@
     >
     </app-mention-suggestions>
 
-    <form #commentForm="ngForm" (ngSubmit)="onCommentSubmit()">
+    <form [formGroup]="commentForm" (ngSubmit)="onCommentSubmit()">
       <label for="newComment" class="visually-hidden">{{
         constants.NEW_COMMENT_LABEL
       }}</label>
@@ -18,28 +18,32 @@
         #commentTextarea
         id="newComment"
         class="comment-textarea"
-        name="comment"
-        [(ngModel)]="newComment"
+        formControlName="newComment"
         (input)="onCommentInput()"
         [placeholder]="constants.NEW_COMMENT_PLACEHOLDER"
-        required
-        minlength="1"
         [attr.aria-label]="constants.NEW_COMMENT_LABEL"
       ></textarea>
+
+      @if (
+        commentForm.get("newComment")?.invalid &&
+        commentForm.get("newComment")?.touched
+      ) {
+        <div class="error-message">Please enter a valid comment.</div>
+      }
 
       <div class="button-group">
         <button
           type="button"
           class="reset-button"
           (click)="resetForm()"
-          [disabled]="!newComment"
+          [disabled]="!commentForm.get('newComment')?.value"
         >
           {{ constants.RESET_BUTTON_TEXT }}
         </button>
         <button
           type="submit"
           class="comment-button"
-          [disabled]="!commentForm.form.valid"
+          [disabled]="!commentForm.valid"
         >
           {{ constants.ADD_COMMENT_BUTTON_TEXT }}
         </button>

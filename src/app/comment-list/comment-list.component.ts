@@ -1,5 +1,5 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
+import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MentionSuggestionsComponent } from '../mention-suggestions/mention-suggestions.component';
 import { CommentListViewComponent } from '../comment-list-view/comment-list-view.component';
 import { COMMENT_LIST_CONSTANTS, USER_LIST } from './comment-list.constants';
@@ -12,36 +12,43 @@ interface User {
 @Component({
   selector: 'app-comment-list',
   standalone: true,
-  imports: [FormsModule, MentionSuggestionsComponent, CommentListViewComponent],
+  imports: [ReactiveFormsModule, MentionSuggestionsComponent, CommentListViewComponent],
   templateUrl: './comment-list.component.html',
   styleUrl: './comment-list.component.scss'
 })
-
-export class CommentListComponent {
+export class CommentListComponent implements OnInit {
   @ViewChild('mentionSuggestions') mentionSuggestions!: MentionSuggestionsComponent;
   @ViewChild('commentTextarea') commentTextarea!: ElementRef<HTMLTextAreaElement>;
-  @ViewChild('commentForm') commentForm!: NgForm;
 
   readonly constants = COMMENT_LIST_CONSTANTS;
   comments: string[] = COMMENT_LIST_CONSTANTS.INITIAL_COMMENTS;
-  newComment = '';
   users: User[] = USER_LIST;
+  commentForm!: FormGroup;
+
+  constructor(private fb: FormBuilder) { }
+
+  ngOnInit() {
+    this.commentForm = this.fb.group({
+      newComment: ['', [Validators.required, Validators.minLength(1)]]
+    });
+  }
 
   onCommentInput(): void {
-    this.mentionSuggestions.checkForMention(this.newComment);
+    const newComment = this.commentForm.get('newComment')?.value;
+    this.mentionSuggestions.checkForMention(newComment);
   }
 
   onCommentSubmit(): void {
-    if (this.commentForm.form.valid) {
-      this.comments.push(this.newComment.trim());
-      this.notifyMentionedUsers(this.newComment);
+    if (this.commentForm.valid) {
+      const newComment = this.commentForm.get('newComment')?.value;
+      this.comments.push(newComment.trim());
+      this.notifyMentionedUsers(newComment);
       this.resetForm();
     }
   }
 
   resetForm(): void {
-    this.newComment = '';
-    this.commentForm.resetForm();
+    this.commentForm.reset();
     this.closeSuggestions();
   }
 
@@ -63,7 +70,9 @@ export class CommentListComponent {
   }
 
   handleSuggestionSelected(user: User): void {
-    this.newComment = this.newComment.replace(/@([a-zA-Z]*)$/, `@${user.name} `);
+    const currentComment = this.commentForm.get('newComment')?.value;
+    const newComment = currentComment.replace(/@([a-zA-Z]*)$/, `@${user.name} `);
+    this.commentForm.patchValue({ newComment });
     this.commentTextarea.nativeElement.focus();
   }
 
