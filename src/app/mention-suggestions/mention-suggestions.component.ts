@@ -57,7 +57,7 @@ export class MentionSuggestionsComponent {
       this.filteredSuggestions = this.suggestions.filter(suggestion =>
         suggestion.name.toLowerCase().startsWith(typedName)
       ).slice(0, this.numberOfSuggestions);
-      this.showDropdown = this.filteredSuggestions.length > 0;
+      this.showDropdown = true
       this.selectedIndex = 0;
       this.mention = match[1];
     } else {

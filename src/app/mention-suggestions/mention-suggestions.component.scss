@@ -71,6 +71,14 @@
       }
     }
   }
+
+  .no-suggestions {
+    padding: 12px;
+    text-align: center;
+    color: #666;
+    font-style: italic;
+    font-size: 14px;
+  }
 }
 
 @media (max-width: 600px) {
@@ -96,6 +104,11 @@
           font-size: 12px;
         }
       }
+    }
+
+    .no-suggestions {
+      padding: 8px;
+      font-size: 12px;
     }
   }
 }

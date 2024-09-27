@@ -6,24 +6,28 @@
         <span>matching &#64;{{ mention }}</span>
       }
     </div>
-    <ul class="suggestion-list">
-      @for (
-        suggestion of filteredSuggestions;
-        track suggestion;
-        let i = $index
-      ) {
-        <li [class.selected]="i === selectedIndex">
-          <button
-            type="button"
-            class="suggestion-button"
-            (click)="selectSuggestion(suggestion)"
-            (mouseenter)="selectedIndex = i"
-          >
-            <span class="user-avatar">{{ suggestion.name[0] }}</span>
-            <span class="user-name">{{ suggestion.name }}</span>
-          </button>
-        </li>
-      }
-    </ul>
+    @if (filteredSuggestions.length > 0) {
+      <ul class="suggestion-list">
+        @for (
+          suggestion of filteredSuggestions;
+          track suggestion;
+          let i = $index
+        ) {
+          <li [class.selected]="i === selectedIndex">
+            <button
+              type="button"
+              class="suggestion-button"
+              (click)="selectSuggestion(suggestion)"
+              (mouseenter)="selectedIndex = i"
+            >
+              <span class="user-avatar">{{ suggestion.name[0] }}</span>
+              <span class="user-name">{{ suggestion.name }}</span>
+            </button>
+          </li>
+        }
+      </ul>
+    } @else {
+      <div class="no-suggestions">No matching users found</div>
+    }
   </div>
 }
