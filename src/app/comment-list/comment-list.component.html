@@ -1,5 +1,6 @@
-<div class="comments-section">
+<section class="comments-section">
   <app-comment-list-view [comments]="comments"></app-comment-list-view>
+
   <section class="comment-input">
     <app-mention-suggestions
       #mentionSuggestions
@@ -8,9 +9,12 @@
       (suggestionSelected)="handleSuggestionSelected($event)"
     >
     </app-mention-suggestions>
+
     <form #commentForm="ngForm" (ngSubmit)="onCommentSubmit()">
+      <label for="newComment" class="visually-hidden">New Comment</label>
       <textarea
         #commentTextarea
+        id="newComment"
         class="comment-textarea"
         name="comment"
         [(ngModel)]="newComment"
@@ -18,7 +22,9 @@
         placeholder="Add new comment..."
         required
         minlength="1"
+        aria-label="New comment"
       ></textarea>
+
       <div class="button-group">
         <button
           type="button"
@@ -38,4 +44,4 @@
       </div>
     </form>
   </section>
-</div>
+</section>
