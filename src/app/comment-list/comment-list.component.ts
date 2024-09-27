@@ -55,6 +55,7 @@ export class CommentListComponent {
   resetForm(): void {
     this.newComment = '';
     this.commentForm.resetForm();
+    this.closeSuggestions();
   }
 
   private extractMentionedUsers(comment: string): User[] {
@@ -77,5 +78,9 @@ export class CommentListComponent {
   handleSuggestionSelected(user: User): void {
     this.newComment = this.newComment.replace(/@([a-zA-Z]*)$/, `@${user.name} `);
     this.commentTextarea.nativeElement.focus();
+  }
+
+  closeSuggestions(): void {
+    this.mentionSuggestions.showDropdown = false;
   }
 }
