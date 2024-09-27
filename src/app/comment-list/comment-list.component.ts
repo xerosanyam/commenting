@@ -1,6 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MentionSuggestionsComponent } from '../mention-suggestions/mention-suggestions.component';
+import { CommentListViewComponent } from '../comment-list-view/comment-list-view.component';
 
 interface User {
   userID: number;
@@ -10,7 +11,7 @@ interface User {
 @Component({
   selector: 'app-comment-list',
   standalone: true,
-  imports: [FormsModule, MentionSuggestionsComponent],
+  imports: [FormsModule, MentionSuggestionsComponent, CommentListViewComponent],
   templateUrl: './comment-list.component.html',
   styleUrl: './comment-list.component.scss'
 })
