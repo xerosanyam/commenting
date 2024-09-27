@@ -1,7 +1,7 @@
 export const COMMENT_LIST_CONSTANTS = {
 	INITIAL_COMMENTS: [
 		'This task was assigned to Daryl',
-		'Waiting on Partas',
+		'Waiting on Parts',
 	],
 	USERS_TITLE: 'Users',
 	RESET_BUTTON_TEXT: 'Reset',
