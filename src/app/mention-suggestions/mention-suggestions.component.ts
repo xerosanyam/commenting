@@ -23,6 +23,7 @@ export class MentionSuggestionsComponent {
   mention = '';
   numberOfSuggestions = 4;
   errorMessage = '';
+  isLoading = false;
 
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
@@ -55,23 +56,28 @@ export class MentionSuggestionsComponent {
     const match = text.match(this.mentionRegex);
     if (match) {
       const typedName = match[1].toLowerCase();
+      this.isLoading = true;
+      this.showDropdown = true;
+      this.errorMessage = '';
+
       try {
         this.filteredSuggestions = this.suggestions.filter(suggestion =>
           suggestion.name.toLowerCase().startsWith(typedName)
         ).slice(0, this.numberOfSuggestions);
-        this.showDropdown = true;
         this.selectedIndex = 0;
         this.mention = match[1];
-        this.errorMessage = '';
       } catch (error) {
         console.error('Error filtering suggestions:', error);
         this.errorMessage = 'An error occurred while fetching suggestions.';
         this.filteredSuggestions = [];
+      } finally {
+        this.isLoading = false;
       }
     } else {
       this.showDropdown = false;
       this.selectedIndex = -1;
       this.errorMessage = '';
+      this.isLoading = false;
     }
   }
 

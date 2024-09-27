@@ -6,7 +6,12 @@
         <span>matching &#64;{{ mention }}</span>
       }
     </div>
-    @if (errorMessage) {
+    @if (isLoading) {
+      <div class="loading-state">
+        <div class="spinner"></div>
+        <span>Loading suggestions...</span>
+      </div>
+    } @else if (errorMessage) {
       <div class="error-message">{{ errorMessage }}</div>
     } @else if (filteredSuggestions.length > 0) {
       <ul class="suggestion-list">

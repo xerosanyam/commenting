@@ -89,6 +89,35 @@
     background-color: #f8d7da;
     border-top: 1px solid #f5c6cb;
   }
+
+  .loading-state {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    color: #666;
+    font-style: italic;
+    font-size: 14px;
+
+    .spinner {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #f3f3f3;
+      border-top: 2px solid #3498db;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-right: 8px;
+    }
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 }
 
 @media (max-width: 600px) {
@@ -124,6 +153,16 @@
     .error-message {
       padding: 8px;
       font-size: 12px;
+    }
+
+    .loading-state {
+      padding: 8px;
+      font-size: 12px;
+
+      .spinner {
+        width: 16px;
+        height: 16px;
+      }
     }
   }
 }
