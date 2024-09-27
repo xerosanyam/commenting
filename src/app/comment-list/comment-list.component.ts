@@ -2,6 +2,7 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MentionSuggestionsComponent } from '../mention-suggestions/mention-suggestions.component';
 import { CommentListViewComponent } from '../comment-list-view/comment-list-view.component';
+import { COMMENT_LIST_CONSTANTS, USER_LIST } from './comment-list.constants';
 
 interface User {
   userID: number;
@@ -21,24 +22,10 @@ export class CommentListComponent {
   @ViewChild('commentTextarea') commentTextarea!: ElementRef<HTMLTextAreaElement>;
   @ViewChild('commentForm') commentForm!: NgForm;
 
-  comments: string[] = [
-    'This task was assigned to Daryl',
-    'Waiting on Parts',
-  ];
-
+  readonly constants = COMMENT_LIST_CONSTANTS;
+  comments: string[] = COMMENT_LIST_CONSTANTS.INITIAL_COMMENTS;
   newComment = '';
-
-  users: User[] = [
-    { userID: 1, name: 'Kevin' },
-    { userID: 2, name: 'Jeff' },
-    { userID: 3, name: 'Bryan' },
-    { userID: 4, name: 'Gabbey' },
-    { userID: 5, name: 'Daryl' },
-    { userID: 6, name: 'Kyle' },
-    { userID: 7, name: 'Jen' },
-    { userID: 8, name: 'Megan' },
-    { userID: 9, name: 'Kevin' }
-  ];
+  users: User[] = USER_LIST;
 
   onCommentInput(): void {
     this.mentionSuggestions.checkForMention(this.newComment);

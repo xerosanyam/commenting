@@ -9,7 +9,7 @@
     @if (isLoading) {
       <div class="loading-state">
         <div class="spinner"></div>
-        <span>Loading suggestions...</span>
+        <span>{{ constants.LOADING_TEXT }}</span>
       </div>
     } @else if (errorMessage) {
       <div class="error-message">{{ errorMessage }}</div>
@@ -34,7 +34,7 @@
         }
       </ul>
     } @else {
-      <div class="no-suggestions">No matching users found</div>
+      <div class="no-suggestions">{{ constants.NO_SUGGESTIONS_TEXT }}</div>
     }
   </div>
 }

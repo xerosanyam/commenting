@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output, Input, HostListener } from '@angular/core';
+import { MENTION_SUGGESTIONS_CONSTANTS } from './mention-suggestions.constants';
 
 interface User {
   userID: number;
@@ -12,10 +13,11 @@ interface User {
   styleUrls: ['./mention-suggestions.component.scss']
 })
 export class MentionSuggestionsComponent {
-  @Input() title = 'Suggestions';
+  @Input() title = MENTION_SUGGESTIONS_CONSTANTS.DEFAULT_TITLE;
   @Input() suggestions: User[] = [];
   @Output() suggestionSelected = new EventEmitter<User>();
 
+  readonly constants = MENTION_SUGGESTIONS_CONSTANTS;
   filteredSuggestions: User[] = [];
   showDropdown = false;
   mentionRegex = /@([a-zA-Z]*)$/;
@@ -68,7 +70,7 @@ export class MentionSuggestionsComponent {
         this.mention = match[1];
       } catch (error) {
         console.error('Error filtering suggestions:', error);
-        this.errorMessage = 'An error occurred while fetching suggestions.';
+        this.errorMessage = this.constants.ERROR_MESSAGE;
         this.filteredSuggestions = [];
       } finally {
         this.isLoading = false;

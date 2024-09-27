@@ -4,14 +4,16 @@
   <section class="comment-input">
     <app-mention-suggestions
       #mentionSuggestions
-      title="Users"
+      [title]="constants.USERS_TITLE"
       [suggestions]="users"
       (suggestionSelected)="handleSuggestionSelected($event)"
     >
     </app-mention-suggestions>
 
     <form #commentForm="ngForm" (ngSubmit)="onCommentSubmit()">
-      <label for="newComment" class="visually-hidden">New Comment</label>
+      <label for="newComment" class="visually-hidden">{{
+        constants.NEW_COMMENT_LABEL
+      }}</label>
       <textarea
         #commentTextarea
         id="newComment"
@@ -19,10 +21,10 @@
         name="comment"
         [(ngModel)]="newComment"
         (input)="onCommentInput()"
-        placeholder="Add new comment..."
+        [placeholder]="constants.NEW_COMMENT_PLACEHOLDER"
         required
         minlength="1"
-        aria-label="New comment"
+        [attr.aria-label]="constants.NEW_COMMENT_LABEL"
       ></textarea>
 
       <div class="button-group">
@@ -32,14 +34,14 @@
           (click)="resetForm()"
           [disabled]="!newComment"
         >
-          Reset
+          {{ constants.RESET_BUTTON_TEXT }}
         </button>
         <button
           type="submit"
           class="comment-button"
           [disabled]="!commentForm.form.valid"
         >
-          Add comment
+          {{ constants.ADD_COMMENT_BUTTON_TEXT }}
         </button>
       </div>
     </form>
