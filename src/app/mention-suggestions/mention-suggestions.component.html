@@ -6,7 +6,9 @@
         <span>matching &#64;{{ mention }}</span>
       }
     </div>
-    @if (filteredSuggestions.length > 0) {
+    @if (errorMessage) {
+      <div class="error-message">{{ errorMessage }}</div>
+    } @else if (filteredSuggestions.length > 0) {
       <ul class="suggestion-list">
         @for (
           suggestion of filteredSuggestions;
